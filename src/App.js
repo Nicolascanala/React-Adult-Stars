@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
@@ -38,6 +38,17 @@ const App = () => {
         reminder: true,
     },
 ])
+
+const LOCAL_STORAGE_KEY = 'todosApp.todos'
+
+useEffect(() => {
+  const storedTasks = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+  if (storedTasks) setTasks(storedTasks)
+}, [])
+
+useEffect(() => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks))
+}, [tasks])
 
 // Add Adult Task
 const addTask = (task) => {
